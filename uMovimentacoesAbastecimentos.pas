@@ -75,6 +75,7 @@ begin
   inherited;
   qrPesquisaValorCombustivel.SQL.Clear;
   edtValorLitro.Text := '';
+
   if dbeCodigoBomba.Text <> '' then
   begin
     qrPesquisaValorCombustivel.SQL.Clear;
@@ -89,6 +90,7 @@ end;
 procedure TfrmMovimentacoesAbastecimentos.dbeQtdLitrosChange(Sender: TObject);
 begin
   inherited;
+
   if (dsdados.State in [dsInsert,dsEdit])  and (dbeQtdLitros.Text <> '') then
   begin
     dbeValorLiquido.Text := FormatCurr(',0.00', FValorPorLitro * StrToCurr(dbeQtdLitros.Text));

@@ -2,6 +2,7 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
   Caption = 'frmMovimentoAbastecimentoReport'
   ClientHeight = 571
   ClientWidth = 771
+  ExplicitTop = -27
   ExplicitWidth = 787
   ExplicitHeight = 610
   PixelsPerInch = 96
@@ -25,11 +26,17 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
       Height = 35
       BandType = btTitle
       object RLLabel1: TRLLabel
-        Left = 256
-        Top = 16
-        Width = 164
-        Height = 16
+        Left = 248
+        Top = 6
+        Width = 249
+        Height = 23
         Caption = 'Relatorio de Abastecimento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -20
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
       end
     end
     object RLGroup1: TRLGroup
@@ -44,12 +51,43 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
         Width = 718
         Height = 33
         BandType = btColumnHeader
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = True
+        Borders.FixedBottom = True
+        Color = clBtnFace
+        ParentColor = False
+        Transparent = False
         object RLLabel2: TRLLabel
           Left = 13
           Top = 11
-          Width = 35
+          Width = 37
           Height = 16
           Caption = 'Data:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBText5: TRLDBText
+          Left = 56
+          Top = 11
+          Width = 38
+          Height = 16
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = False
+          Borders.DrawTop = False
+          Borders.DrawRight = False
+          Borders.DrawBottom = False
+          DataField = 'DATA'
+          DataSource = dsRelatorio
+          Text = ''
+          Transparent = False
         end
       end
       object RLBand3: TRLBand
@@ -57,6 +95,11 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
         Top = 33
         Width = 718
         Height = 52
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
         BeforePrint = RLBand3BeforePrint
         object RLDBText2: TRLDBText
           Left = 13
@@ -77,10 +120,11 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
           Text = ''
         end
         object RLDBText4: TRLDBText
-          Left = 432
+          Left = 608
           Top = 28
           Width = 99
           Height = 16
+          Alignment = taRightJustify
           DataField = 'VALOR_BRUTO'
           DataSource = dsRelatorio
           Text = ''
@@ -91,6 +135,12 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
           Width = 46
           Height = 16
           Caption = 'Tanque'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
         object RLLabel4: TRLLabel
           Left = 264
@@ -98,53 +148,58 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
           Width = 45
           Height = 16
           Caption = 'Bomba'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
         object RLLabel5: TRLLabel
-          Left = 432
+          Left = 608
           Top = 6
           Width = 54
           Height = 16
           Caption = 'Valor R$'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
-      end
-      object RLDBText1: TRLDBText
-        Left = 77
-        Top = 11
-        Width = 38
-        Height = 16
-        DataField = 'DATA'
-        DataSource = dsRelatorio
-        Text = ''
       end
     end
     object RLBand4: TRLBand
       Left = 38
       Top = 161
       Width = 718
-      Height = 48
+      Height = 40
       BandType = btSummary
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = True
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      Borders.FixedTop = True
       BeforePrint = RLBand4BeforePrint
       object RLLabel6: TRLLabel
-        Left = 488
-        Top = 14
-        Width = 84
+        Left = 526
+        Top = 11
+        Width = 94
         Height = 16
         Caption = 'Total Per'#237'odo:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
       end
-      object RLDBResult1: TRLDBResult
-        Left = 579
-        Top = 13
-        Width = 138
-        Height = 16
-        DataField = 'VALOR_BRUTO'
-        DataSource = dsRelatorio
-        Info = riSum
-        Text = ''
-      end
-      object RLLabel7: TRLLabel
-        Left = 336
-        Top = 16
-        Width = 58
+      object rlTotalPeriodo: TRLLabel
+        Left = 626
+        Top = 11
+        Width = 83
         Height = 16
       end
     end
@@ -180,5 +235,25 @@ inherited frmMovimentoAbastecimentoReport: TfrmMovimentoAbastecimentoReport
     ProviderName = 'dpRelAbastecimentos'
     Left = 168
     Top = 304
+    object cdsRelAbastecimentosDATA: TSQLTimeStampField
+      FieldName = 'DATA'
+      Required = True
+    end
+    object cdsRelAbastecimentosNOME_TANQUE: TStringField
+      FieldName = 'NOME_TANQUE'
+      Required = True
+      Size = 50
+    end
+    object cdsRelAbastecimentosNOME_BOMBA: TStringField
+      FieldName = 'NOME_BOMBA'
+      Required = True
+      Size = 50
+    end
+    object cdsRelAbastecimentosVALOR_BRUTO: TFMTBCDField
+      FieldName = 'VALOR_BRUTO'
+      Required = True
+      Precision = 18
+      Size = 2
+    end
   end
 end

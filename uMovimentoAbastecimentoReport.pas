@@ -20,7 +20,6 @@ type
     RLGroup1: TRLGroup;
     RLBand2: TRLBand;
     RLBand3: TRLBand;
-    RLDBText1: TRLDBText;
     RLLabel2: TRLLabel;
     RLDBText2: TRLDBText;
     RLDBText3: TRLDBText;
@@ -30,8 +29,12 @@ type
     RLLabel5: TRLLabel;
     RLBand4: TRLBand;
     RLLabel6: TRLLabel;
-    RLDBResult1: TRLDBResult;
-    RLLabel7: TRLLabel;
+    rlTotalPeriodo: TRLLabel;
+    cdsRelAbastecimentosDATA: TSQLTimeStampField;
+    cdsRelAbastecimentosNOME_TANQUE: TStringField;
+    cdsRelAbastecimentosNOME_BOMBA: TStringField;
+    cdsRelAbastecimentosVALOR_BRUTO: TFMTBCDField;
+    RLDBText5: TRLDBText;
     procedure rlMovimentoAbastecimentoBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
     procedure RLBand3BeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -68,7 +71,7 @@ procedure TfrmMovimentoAbastecimentoReport.RLBand4BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   inherited;
-  RLLabel7.Caption := FormatCurr(',0.00', FTotal);
+  rlTotalPeriodo.Caption := FormatCurr(',0.00', FTotal);
 end;
 
 procedure TfrmMovimentoAbastecimentoReport.rlMovimentoAbastecimentoBeforePrint(
@@ -77,15 +80,9 @@ var
   Dia, Mes, Ano: Word;
 begin
   inherited;
-  qrRelAbastecimentos.SQL.Text := SQL_REL;
-  qrRelAbastecimentos.SQL.Text := qrRelAbastecimentos.SQL.Text + ' ORDER BY ABAS.DATA ';
-  cdsRelAbastecimentos.Open;
-  Exit;
-
-
-
   FTotal := 0;
   qrRelAbastecimentos.SQL.Text := SQL_REL;
+
   if DataInicial > 0 then
   begin
     DecodeDate(DataInicial, Ano, Mes, Dia);
@@ -99,8 +96,9 @@ begin
       qrRelAbastecimentos.SQL.Text := qrRelAbastecimentos.SQL.Text + ' AND '
     else
       qrRelAbastecimentos.SQL.Text := qrRelAbastecimentos.SQL.Text + ' WHERE ';
-      DecodeDate(DataFinal, Ano, Mes, Dia);
-      qrRelAbastecimentos.SQL.Text := qrRelAbastecimentos.SQL.Text +
+
+    DecodeDate(DataFinal, Ano, Mes, Dia);
+    qrRelAbastecimentos.SQL.Text := qrRelAbastecimentos.SQL.Text +
       ' ABAS.DATA <= ' + QuotedStr(IntToStr(Ano) + '-' + IntToStr(Mes) + '-' + IntToStr(Dia) + ' 23:59:59');
   end;
 

@@ -34,7 +34,7 @@ object dmPrincipal: TdmPrincipal
       'MaxBlobSize=-1'
       'TrimChar=False'
       'DriverName=Firebird'
-      'Database=D:\Posto Combustivel\Db\combustiveis.fdb'
+      'Database=D:\SisPetro\Db\combustiveis.fdb'
       'RoleName=RoleName'
       'User_Name=sysdba'
       'Password=masterkey'
