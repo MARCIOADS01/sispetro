@@ -39,11 +39,16 @@ type
     procedure dbeCodigoBombaChange(Sender: TObject);
     procedure dbeQtdLitrosChange(Sender: TObject);
     procedure dbeQtdLitrosKeyPress(Sender: TObject; var Key: Char);
+    procedure dbeCodigoBombaExit(Sender: TObject);
+    procedure dsDadosStateChange(Sender: TObject);
+    procedure dblBombaCloseUp(Sender: TObject);
   private
     { Private declarations }
     FdmprincipalImpostos: TdmPrincipal;
     FdmprincipalBombas: TdmPrincipal;
     FValorPorLitro: Currency;
+
+    procedure LoadPrice;
   protected
     function ValidaDados: Boolean; override;
   public
@@ -67,17 +72,19 @@ const
 procedure TfrmMovimentacoesAbastecimentos.btnAlterarClick(Sender: TObject);
 begin
   inherited;
-   dtpDataAbastecimento.DateTime  := dmPrincipal.cdsAbastecimentos.FieldByName('DATA').AsDateTime;
+  dtpDataAbastecimento.DateTime  := dmPrincipal.cdsAbastecimentos.FieldByName('DATA').AsDateTime;
 end;
 
 procedure TfrmMovimentacoesAbastecimentos.dbeCodigoBombaChange(Sender: TObject);
 begin
   inherited;
+Exit;
   qrPesquisaValorCombustivel.SQL.Clear;
   edtValorLitro.Text := '';
 
   if dbeCodigoBomba.Text <> '' then
   begin
+    qrPesquisaValorCombustivel.SQLConnection := dmPrincipal.SQLConexao;
     qrPesquisaValorCombustivel.SQL.Clear;
     qrPesquisaValorCombustivel.SQL.Text := SQL_PESQUISA_VALOR_COMBUSTIVEL + ' WHERE BOMB.ID = ' + dbeCodigoBomba.Text;
     qrPesquisaValorCombustivel.Open;
@@ -85,6 +92,12 @@ begin
     FValorPorLitro := qrPesquisaValorCombustivel.FieldByName('VALOR_COMBUSTIVEL').AsCurrency;
     qrPesquisaValorCombustivel.close;
   end;
+end;
+
+procedure TfrmMovimentacoesAbastecimentos.dbeCodigoBombaExit(Sender: TObject);
+begin
+  inherited;
+  LoadPrice;
 end;
 
 procedure TfrmMovimentacoesAbastecimentos.dbeQtdLitrosChange(Sender: TObject);
@@ -112,6 +125,19 @@ begin
   key:= FormatSettings.DecimalSeparator;
 end;
 
+procedure TfrmMovimentacoesAbastecimentos.dblBombaCloseUp(Sender: TObject);
+begin
+  inherited;
+  LoadPrice;
+end;
+
+procedure TfrmMovimentacoesAbastecimentos.dsDadosStateChange(Sender: TObject);
+begin
+  inherited;
+  if dsDados.State = dsEdit then
+    LoadPrice;
+end;
+
 procedure TfrmMovimentacoesAbastecimentos.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -126,6 +152,23 @@ begin
   dsLookupBomba.DataSet.Open;
   dsLookupImposto.DataSet := FdmprincipalImpostos.cdsImpostos;
   dsLookupImposto.DataSet.Open;
+end;
+
+procedure TfrmMovimentacoesAbastecimentos.LoadPrice;
+begin
+  qrPesquisaValorCombustivel.SQL.Clear;
+  edtValorLitro.Text := '';
+
+  if dbeCodigoBomba.Text <> '' then
+  begin
+    qrPesquisaValorCombustivel.SQLConnection := dmPrincipal.SQLConexao;
+    qrPesquisaValorCombustivel.SQL.Clear;
+    qrPesquisaValorCombustivel.SQL.Text := SQL_PESQUISA_VALOR_COMBUSTIVEL + ' WHERE BOMB.ID = ' + dbeCodigoBomba.Text;
+    qrPesquisaValorCombustivel.Open;
+    edtValorLitro.Text := FormatCurr(',0.00', qrPesquisaValorCombustivel.FieldByName('VALOR_COMBUSTIVEL').AsCurrency);
+    FValorPorLitro := qrPesquisaValorCombustivel.FieldByName('VALOR_COMBUSTIVEL').AsCurrency;
+    qrPesquisaValorCombustivel.close;
+  end;
 end;
 
 function TfrmMovimentacoesAbastecimentos.ValidaDados: Boolean;
