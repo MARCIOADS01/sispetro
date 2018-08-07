@@ -47,6 +47,7 @@ object dmPrincipal: TdmPrincipal
       'WaitOnLocks=True'
       'IsolationLevel=ReadCommitted'
       'Trim Char=False')
+    Connected = True
     Left = 32
     Top = 8
   end
@@ -72,6 +73,7 @@ object dmPrincipal: TdmPrincipal
       Size = 30
     end
     object qrCombustiveisVALOR_COMBUSTIVEL: TFMTBCDField
+      DisplayLabel = 'Valor R$'
       FieldName = 'VALOR_COMBUSTIVEL'
       ProviderFlags = [pfInUpdate]
       Required = True
@@ -457,7 +459,7 @@ object dmPrincipal: TdmPrincipal
   object SQLMonitor1: TSQLMonitor
     OnTrace = SQLMonitor1Trace
     SQLConnection = SQLConexao
-    Left = 120
+    Left = 112
     Top = 8
   end
 end

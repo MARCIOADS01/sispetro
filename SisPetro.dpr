@@ -1,6 +1,6 @@
 program SisPetro;
 
-//{$apptype console}
+{$apptype console}
 
 uses
   Vcl.Forms,
