@@ -55,10 +55,11 @@ procedure TfrmCadastroBase.btnAlterarClick(Sender: TObject);
 begin
   inherited;
   if dsDados.DataSet.IsEmpty then
-    ShowmensageInformation('Não há registros.');
+    ShowmensageInformation('Não há registros.')
+  else
   begin
-  pcPrincipal.ActivePage := tsDados;
-  dsDados.DataSet.edit;
+    pcPrincipal.ActivePage := tsDados;
+    dsDados.DataSet.edit;
   end;
 end;
 

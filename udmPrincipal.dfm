@@ -72,11 +72,9 @@ object dmPrincipal: TdmPrincipal
       Size = 30
     end
     object qrCombustiveisVALOR_COMBUSTIVEL: TFMTBCDField
-      DisplayLabel = 'Valor R$'
       FieldName = 'VALOR_COMBUSTIVEL'
       ProviderFlags = [pfInUpdate]
       Required = True
-      currency = True
       Precision = 18
       Size = 2
     end
@@ -181,6 +179,7 @@ object dmPrincipal: TdmPrincipal
   object dspImpostos: TDataSetProvider
     DataSet = qrImpostos
     Options = [poIncFieldProps, poPropogateChanges, poUseQuoteChar]
+    UpdateMode = upWhereKeyOnly
     Left = 112
     Top = 112
   end
@@ -243,6 +242,7 @@ object dmPrincipal: TdmPrincipal
   object dspBombas: TDataSetProvider
     DataSet = qrBombas
     Options = [poIncFieldProps, poPropogateChanges, poUseQuoteChar]
+    UpdateMode = upWhereKeyOnly
     Left = 184
     Top = 112
   end
@@ -305,6 +305,7 @@ object dmPrincipal: TdmPrincipal
   object dspTanques: TDataSetProvider
     DataSet = qrTanques
     Options = [poIncFieldProps, poPropogateChanges, poUseQuoteChar]
+    UpdateMode = upWhereKeyOnly
     Left = 256
     Top = 112
   end
@@ -449,7 +450,14 @@ object dmPrincipal: TdmPrincipal
   object dspAbastecimentos: TDataSetProvider
     DataSet = qrAbastecimentos
     Options = [poIncFieldProps, poPropogateChanges, poUseQuoteChar]
+    UpdateMode = upWhereKeyOnly
     Left = 352
     Top = 112
+  end
+  object SQLMonitor1: TSQLMonitor
+    OnTrace = SQLMonitor1Trace
+    SQLConnection = SQLConexao
+    Left = 120
+    Top = 8
   end
 end

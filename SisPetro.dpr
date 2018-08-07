@@ -1,5 +1,7 @@
 program SisPetro;
 
+//{$apptype console}
+
 uses
   Vcl.Forms,
   uFormBase in 'uFormBase.pas' {frmFormBase},

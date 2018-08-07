@@ -11,10 +11,6 @@ inherited frmMovimentacoesAbastecimentos: TfrmMovimentacoesAbastecimentos
       ExplicitHeight = 372
     end
     inherited tsDados: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 24
-      ExplicitWidth = 654
-      ExplicitHeight = 372
       inherited pnlBotoesDados: TPanel
         inherited btnSalvar: TButton
           Top = 0
@@ -113,6 +109,7 @@ inherited frmMovimentacoesAbastecimentos: TfrmMovimentacoesAbastecimentos
           DataSource = dsDados
           TabOrder = 2
           OnChange = dbeCodigoBombaChange
+          OnExit = dbeCodigoBombaExit
         end
         object dbeCodigoImposto: TDBEdit
           Left = 8
@@ -169,6 +166,7 @@ inherited frmMovimentacoesAbastecimentos: TfrmMovimentacoesAbastecimentos
           ListField = 'NOME_BOMBA'
           ListSource = dsLookupBomba
           TabOrder = 3
+          OnCloseUp = dblBombaCloseUp
         end
         object dblImposto: TDBLookupComboBox
           Left = 87
@@ -216,6 +214,7 @@ inherited frmMovimentacoesAbastecimentos: TfrmMovimentacoesAbastecimentos
   end
   inherited dsDados: TDataSource
     DataSet = dmPrincipal.cdsAbastecimentos
+    OnStateChange = dsDadosStateChange
     Left = 600
     Top = 352
   end
@@ -235,8 +234,7 @@ inherited frmMovimentacoesAbastecimentos: TfrmMovimentacoesAbastecimentos
       
         'inner join tanques_combustiveis tqn on tqn.combustivel_id = comb' +
         '.id'
-      'inner join bombas_combustiveis bomb on bomb.tanque_id = tqn.id'
-      'where bomb.id = '#39'dbeCodigoBomba.text'#39)
+      'inner join bombas_combustiveis bomb on bomb.tanque_id = tqn.id')
     SQLConnection = dmPrincipal.SQLConexao
     Left = 552
     Top = 32

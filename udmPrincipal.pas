@@ -4,7 +4,8 @@ interface
 
 uses
   System.SysUtils, System.Classes, Data.DBXFirebird, Data.DB, Data.SqlExpr,
-  Data.FMTBcd, Datasnap.DBClient, Datasnap.Provider, Vcl.Menus, Vcl.Forms;
+  Data.FMTBcd, Datasnap.DBClient, Datasnap.Provider, Vcl.Menus, Vcl.Forms,
+  Data.DBXCommon;
 
 type
   TdmPrincipal = class(TDataModule)
@@ -14,7 +15,6 @@ type
     dspCombustiveis: TDataSetProvider;
     qrCombustiveisID: TIntegerField;
     qrCombustiveisNOME_COMBUSTIVEL: TStringField;
-    qrCombustiveisVALOR_COMBUSTIVEL: TFMTBCDField;
     cdsCombustiveisID: TIntegerField;
     cdsCombustiveisNOME_COMBUSTIVEL: TStringField;
     qrImpostos: TSQLQuery;
@@ -64,6 +64,8 @@ type
     cdsAbastecimentosQTD_LITROS_ABASTECIDO: TFMTBCDField;
     qrAbastecimentosVALOR_IMPOSTO: TFMTBCDField;
     cdsAbastecimentosVALOR_IMPOSTO: TFMTBCDField;
+    qrCombustiveisVALOR_COMBUSTIVEL: TFMTBCDField;
+    SQLMonitor1: TSQLMonitor;
     procedure cdsCombustiveisAfterDelete(DataSet: TDataSet);
     procedure cdsCombustiveisAfterPost(DataSet: TDataSet);
     procedure cdsImpostosAfterPost(DataSet: TDataSet);
@@ -76,6 +78,8 @@ type
     procedure cdsAbastecimentosAfterPost(DataSet: TDataSet);
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+    procedure SQLMonitor1Trace(Sender: TObject; TraceInfo: TDBXTraceInfo;
+      var LogTrace: Boolean);
 
   private
    procedure Commit(aClient: Tclientdataset);
@@ -160,6 +164,12 @@ end;
 procedure TdmPrincipal.DataModuleDestroy(Sender: TObject);
 begin
   SQLConexao.Close;
+end;
+
+procedure TdmPrincipal.SQLMonitor1Trace(Sender: TObject;
+  TraceInfo: TDBXTraceInfo; var LogTrace: Boolean);
+begin
+  writeln(TraceInfo.Message);
 end;
 
 end.
